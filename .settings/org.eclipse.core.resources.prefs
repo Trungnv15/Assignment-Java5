@@ -1,0 +1,11 @@
+eclipse.preferences.version=1
+encoding//src/main/java/com/poly/spring5mvc/config/WebMvcConfig.java=UTF-8
+encoding//src/main/java/com/poly/spring5mvc/controller/DepartmentController.java=UTF-8
+encoding//src/main/java/com/poly/spring5mvc/controller/StaffController.java=UTF-8
+encoding//src/main/java/com/poly/spring5mvc/dao/DepartmentDAO.java=UTF-8
+encoding//src/main/java/com/poly/spring5mvc/dao/StaffsDAO.java=UTF-8
+encoding//src/main/java/com/poly/spring5mvc/service/DepartmentService.java=UTF-8
+encoding//src/main/java/com/poly/spring5mvc/service/StaffService.java=UTF-8
+encoding//src/main/resources/i18n/messages_en.properties=UTF-8
+encoding//src/main/resources/i18n/messages_vi.properties=UTF-8
+encoding/<project>=UTF-8

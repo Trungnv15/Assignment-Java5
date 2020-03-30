@@ -1,0 +1,61 @@
+.card-title {
+    text-align: center;
+    font-size: 30px;
+    size: 10;
+}
+
+hr{
+
+    margin-left: 50px;
+    margin-right: 50px;
+    height: 10px;
+}
+
+.form {
+    display: grid;
+    grid-template-columns: 25% 25% 25%;
+    grid-gap: 20%;
+    margin-left: 3%;
+}
+
+.form .form-controler {
+    width: 300px;
+    height: 30px;
+    margin-bottom: 5px;
+    padding-left: 10px;
+    border-radius: 10px;
+    font-size: 12px;
+    font-family: monospace;
+}
+
+label {
+    font-weight: 450;
+    font-size: 16px;
+    color: rgb(104, 198, 241);
+}
+
+.form .row-3 input {
+    border: none;
+    padding: 10px 5px;
+    width: 100px;
+    margin: 10px 0px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 10px;
+}
+
+.form .row-3 input:hover {
+    background-color: rgb(107, 98, 98);
+}
+
+.form .row-3 .btn-them {
+    background-color: yellow;
+}
+
+.form .row-3 .btn-sua {
+    background-color: rgb(0, 255, 106);
+}
+
+.form .row-3 .btn-xoa {
+    background-color: rgb(255, 0, 34);
+}

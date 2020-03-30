@@ -1,0 +1,4 @@
+com\poly\spring5mvc\controller\HelloWorldController.class
+com\poly\spring5mvc\model\HelloWord.class
+com\poly\spring5mvc\config\SpringMvcDispatcherServletInitializer.class
+com\poly\spring5mvc\config\AppConfig.class
