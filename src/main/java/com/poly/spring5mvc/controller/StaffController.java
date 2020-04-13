@@ -52,28 +52,32 @@ public class StaffController {
 
 	// xử lý request vào trang chủ
 	@RequestMapping(value = "/staff")
-	public String staffManage(ModelMap model) {
-		if (isValidate) {
-			model.addAttribute("messageError", "Nhập đủ các trường sau: ");
-		}
-		if (isExistsEmail) {
-			model.addAttribute("message", "Email đã tồn tại!");
-			isExistsEmail = false;
-		}
-		List<Staffs> listStaff = StaffService.getStaffs();
+	public String staffManage(ModelMap model, Integer offset, Integer maxResults) {
+		
+		List<Staffs> listStaff = StaffService.getStaffs(offset, maxResults);
+		System.out.println("------------------ list size :"+listStaff.size());
+        model.addAttribute("count", StaffService.count());
+        System.out.println(" --------------count : "+StaffService.count());
+        model.addAttribute("offset", offset);
 		model.addAttribute("allList", listStaff);
 		return "staffView/staff";
 	}
 
 	@GetMapping("add-staff")
 	public String saveStaffAndUser(ModelMap model) {
-		
+		if (isValidate) {
+			model.addAttribute("message", "Nhập đủ các trường!");
+			isValidate = false;
+		}
+		if (isExistsEmail) {
+			model.addAttribute("message", "Email đã tồn tại!");
+			isExistsEmail = false;
+		}
 		if (isUpdate) {
 			model.addAttribute("staffsend", staffSendUpdate);
 		} else {
 			staffSendUpdate = new Staffs();
 			model.addAttribute("staffsend", new Staffs());
-			
 		}
 
 		return "staffView/add-staff";
@@ -81,24 +85,26 @@ public class StaffController {
 
 	// Lưu và cập nhận nhân viên
 	@RequestMapping(value = "save-staff", method = RequestMethod.POST)
-	public String saveStaffAndUser(@Valid @ModelAttribute("staffsend") Staffs staff,
+	public String saveStaffAndUser(  @ModelAttribute("staffsend") @Valid  Staffs staff,  BindingResult error, 
 			@RequestParam("Password") String Password, @RequestParam("PhotoFile") MultipartFile photo,
-			BindingResult error, ModelMap model) throws IllegalStateException, IOException {
-
+			ModelMap model) throws IllegalStateException, IOException {
 		if (error.hasErrors()) {
 			isValidate = true;
-			return "staffView/staff";
+			return "redirect: add-staff";
 		}
-
-		// check trùng email
+		
+		//check trùng email
 		String email = staff.getEmail();
 		List<Staffs> listEmail = StaffService.getStaffs();
 		for (int i = 0; i < listEmail.size() - 1; i++) {
 			if (listEmail.get(i).getEmail().equalsIgnoreCase(email)) {
 				isExistsEmail = true;
-				return "redirect: staff";
+				System.out.println("CODE ĐÃ CHẠY TỚI ĐÂY :))");
+				return "redirect: add-staff";
 			}
 		}
+
+		
 		// Lưu ảnh
 		String photoPath = context.getRealPath("/resources/imageTemp2/" + photo.getOriginalFilename());
 		System.out.println(photoPath);

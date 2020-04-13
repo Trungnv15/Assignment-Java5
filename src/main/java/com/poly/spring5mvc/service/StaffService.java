@@ -23,40 +23,50 @@ public class StaffService {
 	/*-------------------------------DAO lấy dữ liệu -----------------------------------*/
 	// lấy toàn bộ nhân viên
 	@Transactional
-	public List<Staffs> getStaffs() {
-		return staffsDAO.getAllStaffs();
+	public List<Staffs> getStaffs(Integer offset, Integer maxResults) {
+		return staffsDAO.getAllStaffs(offset, maxResults);
 	}
 	
 	@Transactional
-	public Staffs getStaffEmail(String Email)
-	{
+	public List<Staffs> getStaffs() {
+		return staffsDAO.getAllStaffs();
+	}
+	public Long count() {
+		
+		return staffsDAO.count();
+	}
+	@Transactional
+	public Staffs getStaffEmail(String Email) {
 		return staffsDAO.getStaffByEmail(Email);
 	}
 
 	/*-------------------------------DAO lưu dữ liệu -----------------------------------*/
-	
-	//Lưu nhân viên
+
+	// Lưu nhân viên
 	@Transactional
-	public void saveStaff(Users theUser, Staffs staff ) {
+	public void saveStaff(Users theUser, Staffs staff) {
 		staffsDAO.saveUser(theUser);
 		staffsDAO.saveStaff(staff);
 	}
-	
-	//lấy nhân viên theo ID
+
+	// lấy nhân viên theo ID
 	@Transactional
 	public Staffs getStaffById(int TheIdStaff) {
 		return staffsDAO.getStaffById(TheIdStaff);
 	}
-	
-	
-	//xóa user theo email
+
+	// xóa user theo email
 	@Transactional
-	public void delete(String IdUser ) {
+	public void delete(String IdUser) {
 		staffsDAO.deleteRecord(IdUser);
 		staffsDAO.deleteUser(IdUser);
 		staffsDAO.deleteStaff(IdUser);
 	}
-	
-	//xóa record
 
+	// xóa record
+	@Transactional
+	public List<Staffs> checkIsExistsStaffOfDepartment(int IdDepartment) {
+		return staffsDAO.checkIsExistsStaffOfDepartment(IdDepartment);
+
+	}
 }

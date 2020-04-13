@@ -10,6 +10,7 @@ import javax.persistence.criteria.Root;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Projections;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -28,6 +29,19 @@ public class StaffsDAO {
 	/*----------------------------------------------lấy dữ liệu----------------------------------------*/
 
 	// Lấy toàn bộ nhân viênz
+	@SuppressWarnings("unchecked")
+	public List<Staffs> getAllStaffs(Integer offset, Integer maxResults) {
+		Session session = sessionFactory.getCurrentSession();
+		CriteriaBuilder cb = session.getCriteriaBuilder();
+		CriteriaQuery<Staffs> cq = cb.createQuery(Staffs.class);
+		Root<Staffs> root = cq.from(Staffs.class);
+		cq.select(root);
+		Query query = session.createQuery(cq);
+		return query.setFirstResult(offset != null ? offset : 0).setMaxResults(maxResults != null ? maxResults : 10)
+				.getResultList();
+	}
+
+	@SuppressWarnings("unchecked")
 	public List<Staffs> getAllStaffs() {
 		Session session = sessionFactory.getCurrentSession();
 		CriteriaBuilder cb = session.getCriteriaBuilder();
@@ -36,6 +50,12 @@ public class StaffsDAO {
 		cq.select(root);
 		Query query = session.createQuery(cq);
 		return query.getResultList();
+	}
+
+	@SuppressWarnings({ "unchecked", "deprecation" })
+	public Long count() {
+		return (Long) sessionFactory.openSession().createCriteria(Staffs.class).setProjection(Projections.rowCount())
+				.uniqueResult();
 	}
 
 	/*----------------------------------------------Lưu và update dữ liệu----------------------------------------*/
@@ -64,9 +84,9 @@ public class StaffsDAO {
 	// xóa nhân viên theo email
 	public void deleteStaff(String Email) {
 		try {
-			
+
 			Session session = sessionFactory.getCurrentSession();
-			String deleteQuery = "delete from Staffs where Email = '"+ Email +"'";
+			String deleteQuery = "delete from Staffs where Email = '" + Email + "'";
 			Query query = session.createQuery(deleteQuery);
 			System.out.println(Email);
 			query.executeUpdate();
@@ -74,20 +94,19 @@ public class StaffsDAO {
 			System.out.println(e);
 		}
 	}
-	
-	//xóa bản nghi nhân viên
-	
-	public void deleteRecord(String Email)
-	{
+
+	// xóa bản nghi nhân viên
+
+	public void deleteRecord(String Email) {
 		Session session = sessionFactory.getCurrentSession();
-		
-		 Staffs staff = this.getStaffByEmail(Email);
-		 int IdStaff = staff.getIdStaff();
-		 String hql = "delete from Records where idStaffs = "+ IdStaff +"";
-		 System.out.println("Đây là câu lệnh xóa: "+hql);
-		 Query query = session.createQuery(hql);
-		 query.executeUpdate();
-		
+
+		Staffs staff = this.getStaffByEmail(Email);
+		int IdStaff = staff.getIdStaff();
+		String hql = "delete from Records where idStaffs = " + IdStaff + "";
+		System.out.println("Đây là câu lệnh xóa: " + hql);
+		Query query = session.createQuery(hql);
+		query.executeUpdate();
+
 	}
 
 	// lấy nhân viên theo ID
@@ -105,6 +124,18 @@ public class StaffsDAO {
 		List<Staffs> tempGetInfomationStaff = session.createQuery(hql).list();
 		Staffs GetInfomationStaff = tempGetInfomationStaff.get(0);
 		return GetInfomationStaff;
+	}
+
+	// kiểm tra tồn tại phòng bam
+	public List<Staffs> checkIsExistsStaffOfDepartment(int IdDepartment) {
+
+		Session session = sessionFactory.getCurrentSession();
+		String hql = "from Staffs u where u.Department.DepartsId = "+IdDepartment+"";
+		List<Staffs> getList = session.createQuery(hql).list(); 
+//		System.out.println("Đây là câu kết qua get list để xóa: --------------- " +getList.get(0).getEmail());
+//		System.out.println("Đây là câu lệnh sql: --------------- "  + hql);
+		return getList;
+
 	}
 
 }

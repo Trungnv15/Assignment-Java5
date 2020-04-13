@@ -59,8 +59,8 @@ public class DepartmentDAO {
 		Session session = sessionFactory.getCurrentSession();
 
 		String hql = "update Departments SET Departments.RewardPoint = '" + this.getTotalPenaltyPoints().toString()
-				+ "', Departments.PenaltyPoints = '" + this.getTotalRewardPoint().toString() + "' WHERE departments.DepartsId  = " + IdDepart
-				+ "";
+				+ "', Departments.PenaltyPoints = '" + this.getTotalRewardPoint().toString()
+				+ "' WHERE departments.DepartsId  = " + IdDepart + "";
 //		Query query = session.createQuery(hql);
 		System.out.println("ĐÂY LÀ CÂU LỆNH HQL UPDATE ĐIỂM THƯỜNG PHÒNG BAN " + hql);
 //		query.executeUpdate();
@@ -73,5 +73,6 @@ public class DepartmentDAO {
 		Departments department = session.byId(Departments.class).load(IdDepartment);
 		session.delete(department);
 	}
+
 
 }

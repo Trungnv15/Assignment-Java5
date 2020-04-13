@@ -2,6 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jstl/fmt_rt" prefix="f"%>
 <%@ taglib uri="http://java.sun.com/jstl/fmt_rt" prefix="fmt"%>
+<%@ taglib prefix="tag" uri="/WEB-INF/taglibs/customTaglib.tld"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -16,6 +17,10 @@
 <!-- Favicon icon -->
 <link rel="icon" type="image/png" sizes="16x16"
 	href="resources/assets/images/favicon.png">
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+	integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+	crossorigin="anonymous">
 <title>Thông tin nhân viên</title>
 <!-- Bootstrap Core CSS -->
 <link href="resources/assets/plugins/bootstrap/css/bootstrap.min.css"
@@ -31,7 +36,42 @@
 <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    
 <![endif]-->
+<style>
+.pagination {
+	display: inline-block;
+}
+
+.pagination a {
+	color: black;
+	float: left;
+	padding: 8px 16px;
+	text-decoration: none;
+	transition: background-color .3s;
+	border: 1px solid #ddd;
+}
+
+.pagination ul, li  {
+	display: inline-block;
+}
+
+.pagination a.active {
+	background-color: #4CAF50;
+	color: white;
+	border: 1px solid #4CAF50;
+}
+.pagination a:hover:not(.active) {background-color: #5b9ed8;}
+{
+background-color
+:
+ 
+#ddd
+;
+
+
+}
+</style>
 <%@ page isELIgnored="false"%>
 </head>
 
@@ -189,7 +229,7 @@
 									<table class="table">
 										<thead>
 											<tr>
-												<th>Số thứ tự</th>
+												<th>#</th>
 												<th>Chức năng</th>
 												<th>Mã N.Viên</th>
 												<th>Họ Tên</th>
@@ -208,9 +248,9 @@
 											</tr>
 										</thead>
 										<tbody>
-											<c:forEach varStatus="loop" var="p" items="${allList}">
+											<c:forEach varStatus="itr" var="p" items="${allList}">
 												<tr>
-													<td>${loop.index+1}</td>
+													<td>${offset + itr.index +1}</td>
 													<!-- construct an "update" link with customer id -->
 													<c:url var="updateLink" value="/update-staff">
 														<c:param name="idStaff" value="${p.idStaff}" />
@@ -227,8 +267,9 @@
 													<td>${p.idStaff}</td>
 													<td>${p.fullname}</td>
 
-													<th><img style="height: 80px; width: 60px; border-radius: 5px" src="resources/imageTemp2/${p.photo}"
-														alt="user" /></th>
+													<th><img
+														style="height: 80px; width: 60px; border-radius: 5px"
+														src="resources/imageTemp2/${p.photo}" alt="user" /></th>
 													<td>${p.gender}</td>
 													<td>${p.birthday}</td>
 													<td>${p.email}</td>
@@ -244,6 +285,11 @@
 											</c:forEach>
 										</tbody>
 									</table>
+									<div class="pagination">
+										<tag:paginate max="10" offset="${offset}" count="${count}"
+											uri="/Java5_Assignment/staff" next="&raquo;"
+											previous="&laquo;" />
+									</div>
 								</div>
 							</div>
 						</div>

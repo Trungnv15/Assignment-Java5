@@ -183,6 +183,7 @@
 				<div class="row">
 					<!-- column -->
 					<p style="color: red; font-weight: bold;" id="mesageerror"></p>
+					<h5 style="color: red">${message}</h5>
 					<div class="col-sm-12">
 						<div class="card">
 							<div class="card-block">

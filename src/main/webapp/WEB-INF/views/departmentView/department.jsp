@@ -179,7 +179,9 @@
 
 							<div class="card-block">
 								<hr>
+								<h5 style="color: red">${isNotDelete}</h5>
 								<h5 style="color: red">${message}</h5>
+								
 								<h4 class="card-title">Danh sách nhân viên</h4>
 								<div class="table-responsive">
 									<table class="table">
